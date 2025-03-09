@@ -1,0 +1,93 @@
+{
+    "name": "wheakerd/hyperf-booster",
+    "description": "Booster for Hyperf",
+    "type": "library",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "rm -rf runtime/container",
+            "@composer dump-autoload -o",
+            "@php tests/bin.php start"
+        ]
+    },
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "swoole",
+        "hyperf",
+        "framework",
+        "application",
+        "config",
+        "configuration",
+        "run"
+    ],
+    "authors": [
+        {
+            "name": "wheakerd",
+            "email": "wheakerd@gmail.com"
+        }
+    ],
+    "support": {
+        "docs": "https://github.com/wheakerd/hyperf-booster",
+        "source": "https://github.com/wheakerd/hyperf-booster",
+        "issues": "https://github.com/wheakerd/hyperf-booster/issues",
+        "pull-request": "https://github.com/wheakerd/hyperf-booster/pulls"
+    },
+    "require": {
+        "php": ">=8.3",
+        "hyperf/command": "^3.1",
+        "hyperf/config": "^3.1",
+        "hyperf/di": "^3.1",
+        "hyperf/event": "^3.1",
+        "hyperf/framework": "^3.1",
+        "hyperf/server": "^3.1",
+        "hyperf/support": "^3.1"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "^5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wheakerd\\HyperfBooster\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WheakerdTest\\HyperfBooster\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.packagist.org"
+        },
+        {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        },
+        {
+            "type": "composer",
+            "url": "https://mirrors.tencent.com/composer/"
+        },
+        {
+            "type": "composer",
+            "url": "https://repo.huaweicloud.com/repository/php/"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "process-timeout": 3000,
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.1-dev"
+        },
+        "hyperf": {
+            "config": "Wheakerd\\HyperfBooster\\ConfigProvider"
+        }
+    }
+}
