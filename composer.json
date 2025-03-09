@@ -2,7 +2,6 @@
     "name": "wheakerd/hyperf-booster",
     "description": "Booster for Hyperf",
     "type": "library",
-    "version": "1.0.2",
     "scripts": {
         "dev": [
             "Composer\\Config::disableProcessTimeout",

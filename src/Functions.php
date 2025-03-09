@@ -11,5 +11,5 @@ use Phar;
  */
 function pharEnable(): bool
 {
-    return !strlen(Phar::running(false));
+    return !!strlen(Phar::running(false));
 }
