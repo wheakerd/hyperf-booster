@@ -1,9 +1,15 @@
-<?php
+<?php /** @noinspection PhpUnused */
 declare(strict_types=1);
 
 namespace WheakerdTest\HyperfBooster;
 
+use Hyperf\Collection\Arr;
 use Hyperf\Contract\StdoutLoggerInterface;
+use Hyperf\Framework\Bootstrap\PipeMessageCallback;
+use Hyperf\Framework\Bootstrap\WorkerExitCallback;
+use Hyperf\Framework\Bootstrap\WorkerStartCallback;
+use Hyperf\HttpServer\Server;
+use Hyperf\Server\Event;
 use Hyperf\Server\ServerInterface;
 use Psr\Log\LogLevel;
 use Swoole\Constant;
@@ -52,7 +58,6 @@ final class ConfigProvider
             'scan' => [
                 'paths' => [
                     BASE_PATH . '/app',
-                    BASE_PATH . '/extend',
                 ],
                 'ignore_annotations' => [
                     'mixin',
@@ -157,9 +162,10 @@ final class ConfigProvider
                     'name' => 'http',
                     'type' => ServerInterface::SERVER_HTTP,
                     'host' => '0.0.0.0',
-                    'port' => 9602,
+                    'port' => 9501,
                     'sock_type' => SWOOLE_SOCK_TCP,
                     'callbacks' => [
+                        Event::ON_REQUEST => [Server::class, 'onRequest'],
                     ],
                     'options' => [
                         // Whether to enable request lifecycle event
@@ -168,21 +174,25 @@ final class ConfigProvider
                 ],
             ],
             'settings' => [
-                Constant::OPTION_DAEMONIZE => false,
-                Constant::OPTION_HEARTBEAT_IDLE_TIME => 60,
+                Constant::OPTION_DAEMONIZE                => false,
+                Constant::OPTION_HEARTBEAT_IDLE_TIME      => 60,
                 Constant::OPTION_HEARTBEAT_CHECK_INTERVAL => 30,
-                Constant::OPTION_ENABLE_COROUTINE => true,
-                Constant::OPTION_WORKER_NUM => swoole_cpu_num(),
-                Constant::OPTION_PID_FILE => BASE_PATH . '/runtime/hyperf.pid',
-                Constant::OPTION_OPEN_TCP_NODELAY => true,
-                Constant::OPTION_MAX_COROUTINE => 100000,
-                Constant::OPTION_OPEN_HTTP2_PROTOCOL => true,
-                Constant::OPTION_MAX_REQUEST => 100000,
-                Constant::OPTION_SOCKET_BUFFER_SIZE => 1024 * 1024 * 10,
-                Constant::OPTION_BUFFER_OUTPUT_SIZE => 1024 * 1024 * 10,
-                Constant::OPTION_PACKAGE_MAX_LENGTH => 1024 * 1024 * 10,
+                Constant::OPTION_ENABLE_COROUTINE         => true,
+                Constant::OPTION_WORKER_NUM               => swoole_cpu_num(),
+                Constant::OPTION_PID_FILE                 => ROOT_PATH . '/runtime/hyperf.pid',
+                Constant::OPTION_OPEN_TCP_NODELAY         => true,
+                Constant::OPTION_MAX_COROUTINE            => 100000,
+                Constant::OPTION_OPEN_HTTP2_PROTOCOL      => true,
+                Constant::OPTION_MAX_REQUEST              => 100000,
+                Constant::OPTION_SOCKET_BUFFER_SIZE       => 1024 * 1024 * 10,
+                Constant::OPTION_BUFFER_OUTPUT_SIZE       => 1024 * 1024 * 10,
+                Constant::OPTION_PACKAGE_MAX_LENGTH       => 1024 * 1024 * 10,
             ],
-            'callbacks' => [],
+            'callbacks' => [
+                Event::ON_WORKER_START => [WorkerStartCallback::class, 'onWorkerStart'],
+                Event::ON_PIPE_MESSAGE => [PipeMessageCallback::class, 'onPipeMessage'],
+                Event::ON_WORKER_EXIT => [WorkerExitCallback::class, 'onWorkerExit'],
+            ],
         ];
     }
 
@@ -193,15 +203,15 @@ final class ConfigProvider
 
     public function __invoke(): array
     {
-        $config = [];
+        $configs = [];
 
         foreach (get_class_methods($this) as $method) {
             //  Filter magic method
             if (str_starts_with($method, '__')) continue;
 
-            $config[$method] = $this->{$method}();
+            $configs[$method] = $this->{$method}();
         }
 
-        return $config;
+        return $configs + $configs['config'];
     }
 }

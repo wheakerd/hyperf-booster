@@ -5,24 +5,21 @@ namespace Wheakerd\HyperfBooster;
 
 use Hyperf\Config\ProviderConfig;
 use Hyperf\Di\Definition\DefinitionSource;
-use Hyperf\Di\Exception\Exception;
+use Hyperf\Support\Composer;
 use Phar;
 
 /**
+ * @property string $vendorDir
  * @DefinitionSourceFactory
  * @\Wheakerd\HyperfBooster\DefinitionSourceFactory
  */
 final class DefinitionSourceFactory
 {
-    /**
-     * @return DefinitionSource
-     * @throws Exception
-     */
     public function __invoke(): DefinitionSource
     {
-        if (!defined('BASE_PATH')) {
-            throw new Exception('BASE_PATH is not defined.');
-        }
+        !defined('BASE_PATH') && define('BASE_PATH',
+            (fn() => $this->vendorDir)->call(Composer::getLoader())
+        );
 
         !defined('ROOT_PATH') && define('ROOT_PATH',
             pharEnable() ? dirname(Phar::running(false)) : BASE_PATH,

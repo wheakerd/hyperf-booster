@@ -90,6 +90,7 @@
         },
         "hyperf": {
             "config": "Wheakerd\\HyperfBooster\\ConfigProvider"
-        }
+        },
+        "config": "WheakerdTest\\HyperfBooster\\ConfigProvider"
     }
 }

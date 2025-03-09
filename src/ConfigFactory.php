@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace Wheakerd\HyperfBooster;
 
-use Exception;
 use Hyperf\Config\Config;
 use Hyperf\Config\ProviderConfig;
-use Hyperf\Di\ReflectionManager;
 use Hyperf\Support\Composer;
 use Psr\Container\ContainerInterface;
 
@@ -27,7 +25,6 @@ final class ConfigFactory
 
     /**
      * @return array
-     * @throws Exception
      */
     private function readConfig(): array
     {
