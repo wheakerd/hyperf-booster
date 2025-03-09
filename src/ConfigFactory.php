@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Wheakerd\HyperfBooster;
 
+use Exception;
 use Hyperf\Config\Config;
 use Hyperf\Config\ProviderConfig;
 use Hyperf\Di\ReflectionManager;
 use Hyperf\Support\Composer;
-use LogicException;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -25,27 +25,21 @@ final class ConfigFactory
         return new Config($merged);
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     private function readConfig(): array
     {
         $configFactory = Composer::getJsonContent()['extra']['config'] ?? null;
 
-        if (null === $configFactory) {
-            throw new LogicException('Missing composer.json[\'extra\'][\'config\'].');
+        if (is_string($configFactory) && class_exists($configFactory)) {
+            $config = (new $configFactory)();
+            return is_array($config) ? $config : [];
         }
 
-        if (!class_exists($configFactory)) {
-            throw new LogicException(
-                sprintf('The config factory [%s] does not exist.', $configFactory)
-            );
-        }
+        trigger_error('Missing composer.json[\'extra\'][\'config\'].', E_USER_WARNING);
 
-        if (!ReflectionManager::reflectClass($configFactory)->isInstantiable()) {
-            throw new LogicException(
-                sprintf('The config factory [%s] can\'t be instantiated.', $configFactory)
-            );
-        }
-
-        $config = (new $configFactory)();
-        return is_array($config) ? $config : [];
+        return [];
     }
 }
