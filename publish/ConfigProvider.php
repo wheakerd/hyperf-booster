@@ -52,7 +52,6 @@ final class ConfigProvider
             'scan' => [
                 'paths' => [
                     BASE_PATH . '/app',
-                    BASE_PATH . '/extend',
                 ],
                 'ignore_annotations' => [
                     'mixin',
@@ -173,7 +172,7 @@ final class ConfigProvider
                 Constant::OPTION_HEARTBEAT_CHECK_INTERVAL => 30,
                 Constant::OPTION_ENABLE_COROUTINE => true,
                 Constant::OPTION_WORKER_NUM => swoole_cpu_num(),
-                Constant::OPTION_PID_FILE => BASE_PATH . '/runtime/hyperf.pid',
+                Constant::OPTION_PID_FILE => ROOT_PATH . '/runtime/hyperf.pid',
                 Constant::OPTION_OPEN_TCP_NODELAY => true,
                 Constant::OPTION_MAX_COROUTINE => 100000,
                 Constant::OPTION_OPEN_HTTP2_PROTOCOL => true,
