@@ -2,7 +2,7 @@
     "name": "wheakerd/hyperf-booster",
     "description": "Booster for Hyperf",
     "type": "library",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "scripts": {
         "dev": [
             "Composer\\Config::disableProcessTimeout",
@@ -36,6 +36,7 @@
     },
     "require": {
         "php": ">=8.3",
+        "ext-phar": "*",
         "hyperf/command": "^3.1",
         "hyperf/config": "^3.1",
         "hyperf/di": "^3.1",
@@ -50,7 +51,10 @@
     "autoload": {
         "psr-4": {
             "Wheakerd\\HyperfBooster\\": "src/"
-        }
+        },
+        "files": [
+            "src/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
