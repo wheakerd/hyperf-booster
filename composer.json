@@ -6,7 +6,6 @@
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "rm -rf runtime/container",
-            "@composer dump-autoload -o",
             "@php tests/bin.php start"
         ]
     },
