@@ -23,6 +23,12 @@ final class ConfigProvider
             ],
             'publish' => [
                 [
+                    'id'          => 'bin',
+                    'description' => 'The bin for runner.',
+                    'source'      => __DIR__ . '/../publish/.bin.php',
+                    'destination' => BASE_PATH . '/.bin.php',
+                ],
+                [
                     'id'          => 'config',
                     'description' => 'The config for hyperf-booster.',
                     'source'      => __DIR__ . '/../publish/ConfigProvider.php',

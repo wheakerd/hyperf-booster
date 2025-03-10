@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Asia/Shanghai');
 
 $basePath = getcwd();
-$dir = getBasePath();
+$dir = dirname(__DIR__, 3);
 
 if (file_exists($dir . '/vendor/autoload.php')) {
     $basePath = $dir;
@@ -21,7 +21,6 @@ if (file_exists($dir . '/vendor/autoload.php')) {
 require BASE_PATH . '/vendor/autoload.php';
 
 use Wheakerd\HyperfBooster\Hyperf\Watcher\Process;
-use function Wheakerd\HyperfBooster\getBasePath;
 
 $process = new Process($argv[1]);
 $process();
