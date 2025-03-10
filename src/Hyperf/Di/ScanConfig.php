@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace Wheakerd\HyperfBooster\Hyperf\Di;
 
 use Hyperf\Config\ProviderConfig;
+use Phar;
 use function Hyperf\Support\value;
+use function Wheakerd\HyperfBooster\getBasePath;
+use function Wheakerd\HyperfBooster\pharEnable;
 
 /**
  * @see \Wheakerd\HyperfBooster\ScanConfig

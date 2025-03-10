@@ -22,6 +22,12 @@ final class Application
 {
     public function __construct()
     {
+        !defined('BASE_PATH') && define('BASE_PATH', getBasePath());
+
+        !defined('ROOT_PATH') && define('ROOT_PATH',
+            pharEnable() ? dirname(Phar::running(false)) : BASE_PATH,
+        );
+
         /**
          * @document Support for `PHP` compilation
          */
