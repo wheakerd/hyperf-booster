@@ -51,7 +51,7 @@
         "hyperf/support": "^3.1"
     },
     "require-dev": {
-        "hyperf/watcher": "*",
+        "hyperf/watcher": "^3.1",
         "swoole/ide-helper": "^5"
     },
     "autoload": {
