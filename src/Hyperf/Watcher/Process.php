@@ -20,6 +20,10 @@ use PhpParser\NodeTraverser;
 use Wheakerd\HyperfBooster\Hyperf\Di\ScanConfig;
 use Wheakerd\HyperfBooster\Hyperf\Di\Scanner;
 
+/**
+ * @Process
+ * @\Wheakerd\HyperfBooster\Hyperf\Watcher\Process
+ */
 final class Process
 {
     protected AnnotationReader $reader;

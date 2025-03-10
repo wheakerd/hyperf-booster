@@ -44,6 +44,8 @@ final class WatchCommand extends Command
 
         $options = (array)include $configFile;
 
+        $options ['command'] = 'vendor/wheakerd/hyperf-booster/watcher.php start';
+
         $option = make(Option::class, [
             'options' => $options,
             'dir' => $this->input->getOption('dir'),
