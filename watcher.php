@@ -10,6 +10,9 @@ switch (true) {
     case file_exists($dir . '/.bin.php'):
         require_once $dir . '/.bin.php';
         break;
+    case file_exists($dir . '/../.bin.php'):
+        require_once $dir . '/../.bin.php';
+        break;
     case file_exists($dir . '/bin/hyperf.php'):
         require_once $dir . '/bin/hyperf.php';
         break;
