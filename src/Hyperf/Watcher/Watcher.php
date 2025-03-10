@@ -6,6 +6,7 @@ namespace Wheakerd\HyperfBooster\Hyperf\Watcher;
 use Hyperf\Coroutine\Coroutine;
 use Hyperf\Engine\Channel;
 use Hyperf\Watcher\Watcher as HyperfWatcher;
+use function Hyperf\Watcher\exec;
 
 /**
  * @Watcher
