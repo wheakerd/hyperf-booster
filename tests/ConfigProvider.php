@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace WheakerdTest\HyperfBooster;
 
-use Hyperf\Collection\Arr;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Framework\Bootstrap\PipeMessageCallback;
 use Hyperf\Framework\Bootstrap\WorkerExitCallback;

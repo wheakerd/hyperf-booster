@@ -12,11 +12,15 @@ use Psr\Container\ContainerInterface;
  * @ConfigFactory
  * @\Wheakerd\HyperfBooster\ConfigFactory
  */
-final class ConfigFactory
+final class ConfigFactory extends \Hyperf\Config\ConfigFactory
 {
     public function __invoke(ContainerInterface $container): Config
     {
         $config = $this->readConfig();
+
+        if (null === $config) {
+            return parent::__invoke($container);
+        }
 
         $merged = array_merge_recursive(ProviderConfig::load(), $config);
 
@@ -24,9 +28,9 @@ final class ConfigFactory
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    private function readConfig(): array
+    private function readConfig(): ?array
     {
         $configFactory = Composer::getJsonContent()['extra']['config'] ?? null;
 
@@ -35,8 +39,6 @@ final class ConfigFactory
             return is_array($config) ? $config : [];
         }
 
-        trigger_error('Missing composer.json[\'extra\'][\'config\'].', E_USER_WARNING);
-
-        return [];
+        return null;
     }
 }
